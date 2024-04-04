@@ -15,10 +15,10 @@ public class DonationModel {
     private Long id;
     private String description;
     private int quantity;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryModel category;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "status_id")
     private StatusModel status;
     @Column(nullable = false, updatable = false)
