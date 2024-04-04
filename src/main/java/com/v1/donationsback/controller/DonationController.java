@@ -1,6 +1,7 @@
 package com.v1.donationsback.controller;
 
 
+import com.v1.donationsback.dto.DonationDTO;
 import com.v1.donationsback.models.DonationModel;
 import com.v1.donationsback.service.DonationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +19,30 @@ public class DonationController {
     private DonationService donationService;
 
     @GetMapping
-    public ResponseEntity<List<DonationModel>> listarDoacoes() {
-        List<DonationModel> doacoes = donationService.listarDoacoes();
+    public ResponseEntity<List<DonationModel>> list() {
+        List<DonationModel> doacoes = donationService.listDonations();
         return ResponseEntity.ok(doacoes);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DonationModel> buscarDoacaoPorId(@PathVariable Long id) {
-        DonationModel doacao = donationService.buscarDoacaoPorId(id);
+    public ResponseEntity<DonationModel> find(@PathVariable Long id) {
+        DonationModel doacao = donationService.findDonationById(id);
         return ResponseEntity.ok(doacao);
     }
 
     @PostMapping
-    public ResponseEntity<DonationModel> salvarDoacao(@RequestBody DonationModel doacao) {
-        DonationModel novaDoacao = donationService.salvarDoacao(doacao);
+    public ResponseEntity<DonationModel> save(@RequestBody DonationDTO donationDTO) {
+        DonationModel novaDoacao = donationService.saveDonation(donationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaDoacao);
     }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<DonationModel> update(@RequestBody DonationDTO donationDTO) {
+//
+//    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarDoacao(@PathVariable Long id) {
-        donationService.deletarDoacao(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        donationService.deleteDonation(id);
         return ResponseEntity.noContent().build();
     }
 }

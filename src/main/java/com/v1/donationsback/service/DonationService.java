@@ -1,9 +1,12 @@
 package com.v1.donationsback.service;
 
+import com.v1.donationsback.dto.DonationDTO;
+import com.v1.donationsback.models.CategoryModel;
 import com.v1.donationsback.models.DonationModel;
 import com.v1.donationsback.models.StatusModel;
 import com.v1.donationsback.repository.DonationRepository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +19,42 @@ public class DonationService {
 
     @Autowired
     private DonationRepository donationRepository;
+    @Autowired
+    private CategoryService categoryService;
 
-    public List<DonationModel> listarDoacoes() {
+    public List<DonationModel> listDonations() {
         return donationRepository.findAll();
     }
 
-    public DonationModel buscarDoacaoPorId(Long id) {
-        return donationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Doação não encontrada"));
+    public DonationModel findDonationById(Long id) {
+        return donationRepository.findById(id).get();
     }
-
-    public DonationModel salvarDoacao(DonationModel doacao) {
-        doacao.setCreated_at(new Timestamp(System.currentTimeMillis()));
+    @Transactional
+    public DonationModel saveDonation(DonationDTO donationDTO) {
+        DonationModel donation = convertDtoToModel(donationDTO);
+        //setando a data atual
+        donation.setCreated_at(new Timestamp(System.currentTimeMillis()));
         //ativando o status, inicialmente ativo
-        StatusModel status = new StatusModel(Long.valueOf(2), "ATIVO");
-        doacao.setId(status.getId());
+        StatusModel status = new StatusModel(Long.valueOf(2), "ativo");
+        System.out.println("status"+ status.getId());
+        donation.setStatus(status);
 
-        return donationRepository.save(doacao);
+        return donationRepository.save(donation);
     }
 
-    public void deletarDoacao(Long id) {
+    private DonationModel convertDtoToModel(DonationDTO donationDTO) {
+        DonationModel donation = new DonationModel();
+        donation.setDescription(donationDTO.description());
+        donation.setQuantity(donationDTO.quantity());
+
+        CategoryModel category = categoryService.findById(donationDTO.category_id());
+        donation.setCategory(category);
+
+        return donation;
+    }
+    @Transactional
+    public void deleteDonation(Long id) {
         donationRepository.deleteById(id);
     }
+
 }
