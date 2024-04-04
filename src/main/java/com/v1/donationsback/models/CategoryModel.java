@@ -1,9 +1,11 @@
 package com.v1.donationsback.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "categories")
 public class CategoryModel {
