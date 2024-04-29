@@ -4,6 +4,7 @@ package com.v1.donationsback.controller;
 import com.v1.donationsback.dto.DonationDTO;
 import com.v1.donationsback.models.DonationModel;
 import com.v1.donationsback.service.DonationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class DonationController {
     }
 
     @PostMapping
-    public ResponseEntity<DonationModel> save(@RequestBody DonationDTO donationDTO) {
+    public ResponseEntity<DonationModel> save(@Valid @RequestBody DonationDTO donationDTO) {
         DonationModel novaDoacao = donationService.saveDonation(donationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaDoacao);
     }
