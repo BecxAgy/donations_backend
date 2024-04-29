@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class DonationService {
@@ -22,12 +23,14 @@ public class DonationService {
     @Autowired
     private CategoryService categoryService;
 
-    public List<DonationModel> listDonations() {
+    public List<DonationModel> findAll() {
         return donationRepository.findAll();
     }
 
-    public DonationModel findDonationById(Long id) {
-        return donationRepository.findById(id).get();
+    public Optional<DonationModel> findDonationById(Long id) {
+        return donationRepository.findById(id);
+
+        //tratar
     }
     @Transactional
     public DonationModel saveDonation(DonationDTO donationDTO) {
@@ -42,8 +45,24 @@ public class DonationService {
         return donationRepository.save(donation);
     }
 
+    public DonationModel updateDonation( DonationModel oldDonation, DonationDTO updatedDonationDTO){
+        //os campos ja vem atualizados, falta procurar so a categoria associada e pegar status
+        oldDonation.setDescription(updatedDonationDTO.description());
+        oldDonation.setTitle(updatedDonationDTO.title());
+        oldDonation.setQuantity(updatedDonationDTO.quantity());
+        if(oldDonation.getCategory().getId() != updatedDonationDTO.category_id()){
+            CategoryModel category = categoryService.findById(oldDonation.getId());
+            oldDonation.setCategory(category);
+        }
+        //nao alteramos status aqui
+        return donationRepository.save(oldDonation);
+
+    }
+
+
     private DonationModel convertDtoToModel(DonationDTO donationDTO) {
         DonationModel donation = new DonationModel();
+        donation.setTitle(donation.getTitle());
         donation.setDescription(donationDTO.description());
         donation.setQuantity(donationDTO.quantity());
 
