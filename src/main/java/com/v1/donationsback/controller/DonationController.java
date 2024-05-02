@@ -22,16 +22,16 @@ public class DonationController {
 
     @GetMapping
     public ResponseEntity<List<DonationModel>> list() {
+        //implementar paginação
         List<DonationModel> doacoes = donationService.findAll();
         return ResponseEntity.ok(doacoes);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DonationModel> find(@PathVariable Long id) {
-        Optional<DonationModel> doacao = donationService.findDonationById(id);
-        if(doacao.isPresent()) return ResponseEntity.ok(doacao.get());
+        DonationModel doacao = donationService.findDonationById(id);
+         return ResponseEntity.ok(doacao);
 
-        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -40,14 +40,13 @@ public class DonationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novaDoacao);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<DonationModel> update(@PathVariable Long id, @RequestBody DonationDTO updatedDonationDTO) {
-        Optional<DonationModel> oldDonation = donationService.findDonationById(id);
+    public ResponseEntity<DonationModel> update(@PathVariable Long id,@Valid  @RequestBody DonationDTO updatedDonationDTO) {
+        DonationModel oldDonation = donationService.findDonationById(id);
 
-        if(oldDonation.isPresent()){
-            DonationModel donationModel = donationService.updateDonation(oldDonation.get(), updatedDonationDTO );
-            return ResponseEntity.status(HttpStatus.OK).body(donationModel);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        DonationModel donationModel = donationService.updateDonation(oldDonation, updatedDonationDTO );
+        return ResponseEntity.status(HttpStatus.OK).body(donationModel);
+
+
     }
 
     @DeleteMapping("/{id}")

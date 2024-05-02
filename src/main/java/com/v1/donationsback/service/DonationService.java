@@ -1,6 +1,7 @@
 package com.v1.donationsback.service;
 
 import com.v1.donationsback.dto.DonationDTO;
+import com.v1.donationsback.exceptions.DonationNotFoundException;
 import com.v1.donationsback.models.CategoryModel;
 import com.v1.donationsback.models.DonationModel;
 import com.v1.donationsback.models.StatusModel;
@@ -27,10 +28,15 @@ public class DonationService {
         return donationRepository.findAll();
     }
 
-    public Optional<DonationModel> findDonationById(Long id) {
-        return donationRepository.findById(id);
+    public DonationModel findDonationById(Long id) {
+        Optional<DonationModel>optDonation =donationRepository.findById(id);
 
-        //tratar
+        if(optDonation.isPresent()){
+            return optDonation.get();
+        }
+        //notfounddonationexception
+        throw new DonationNotFoundException(id);
+
     }
     @Transactional
     public DonationModel saveDonation(DonationDTO donationDTO) {
@@ -73,6 +79,7 @@ public class DonationService {
     }
     @Transactional
     public void deleteDonation(Long id) {
+        findDonationById(id);
         donationRepository.deleteById(id);
     }
 
