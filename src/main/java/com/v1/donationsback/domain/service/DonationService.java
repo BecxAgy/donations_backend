@@ -1,11 +1,10 @@
-package com.v1.donationsback.service;
+package com.v1.donationsback.domain.service;
 
 import com.v1.donationsback.dto.DonationDTO;
 import com.v1.donationsback.exceptions.DonationNotFoundException;
-import com.v1.donationsback.models.CategoryModel;
-import com.v1.donationsback.models.DonationModel;
-import com.v1.donationsback.models.StatusModel;
-import com.v1.donationsback.repository.DonationRepository;
+import com.v1.donationsback.domain.models.CategoryModel;
+import com.v1.donationsback.domain.models.DonationModel;
+import com.v1.donationsback.domain.repository.DonationRepository;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +42,6 @@ public class DonationService {
         DonationModel donation = convertDtoToModel(donationDTO);
         //setando a data atual
         donation.setCreated_at(new Timestamp(System.currentTimeMillis()));
-        //ativando o status, inicialmente ativo
-        StatusModel status = new StatusModel(Long.valueOf(2), "ativo");
-        System.out.println("status"+ status.getId());
-        donation.setStatus(status);
 
         return donationRepository.save(donation);
     }

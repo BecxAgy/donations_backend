@@ -1,20 +1,17 @@
-package com.v1.donationsback.models;
+package com.v1.donationsback.domain.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
-@Entity
 @Data
-@Table(name = "statuses")
-public class StatusModel {
+@Entity
+@Table(name = "categories")
+public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-
-
+    private boolean active;
 }

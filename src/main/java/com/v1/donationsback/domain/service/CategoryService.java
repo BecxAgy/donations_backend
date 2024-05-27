@@ -1,9 +1,8 @@
-package com.v1.donationsback.service;
+package com.v1.donationsback.domain.service;
 
-import com.v1.donationsback.models.CategoryModel;
-import com.v1.donationsback.repository.CategoryRepository;
+import com.v1.donationsback.domain.models.CategoryModel;
+import com.v1.donationsback.domain.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

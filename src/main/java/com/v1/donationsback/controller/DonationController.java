@@ -2,8 +2,8 @@ package com.v1.donationsback.controller;
 
 
 import com.v1.donationsback.dto.DonationDTO;
-import com.v1.donationsback.models.DonationModel;
-import com.v1.donationsback.service.DonationService;
+import com.v1.donationsback.domain.models.DonationModel;
+import com.v1.donationsback.domain.service.DonationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

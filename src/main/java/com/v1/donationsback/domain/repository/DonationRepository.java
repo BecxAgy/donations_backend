@@ -1,7 +1,7 @@
-package com.v1.donationsback.repository;
+package com.v1.donationsback.domain.repository;
 
 
-import com.v1.donationsback.models.DonationModel;
+import com.v1.donationsback.domain.models.DonationModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

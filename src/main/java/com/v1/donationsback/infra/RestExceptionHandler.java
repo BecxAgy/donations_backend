@@ -2,7 +2,6 @@ package com.v1.donationsback.infra;
 
 import com.v1.donationsback.exceptions.DonationNotFoundException;
 import com.v1.donationsback.infra.config.ApiErrorMessage;
-import com.v1.donationsback.models.DonationModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
