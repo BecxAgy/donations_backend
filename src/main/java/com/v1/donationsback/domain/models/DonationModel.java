@@ -19,8 +19,8 @@ public class DonationModel {
     private String title;
     private String description;
     private int quantity;
-    @Lob
-    private byte[] image;
+
+    private String imageUrl;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryModel category;

@@ -1,6 +1,7 @@
 package com.v1.donationsback.infra;
 
 import com.v1.donationsback.exceptions.DonationNotFoundException;
+import com.v1.donationsback.exceptions.ImageUploadException;
 import com.v1.donationsback.infra.config.ApiErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,11 +36,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(apiErrorMessage, apiErrorMessage.getStatus());
     }
+
     @ExceptionHandler(DonationNotFoundException.class)
     protected ResponseEntity<Object> handleDonationNotFoundException(DonationNotFoundException ex, WebRequest request){
         ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
 
         return new ResponseEntity<>(apiErrorMessage, new HttpHeaders(), apiErrorMessage.getStatus());
+    }
 
+    @ExceptionHandler(ImageUploadException.class)
+    protected ResponseEntity<Object> handleImageUploadException(ImageUploadException ex, WebRequest request) {
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+
+        return new ResponseEntity<>(apiErrorMessage, new HttpHeaders(), apiErrorMessage.getStatus());
     }
 }
