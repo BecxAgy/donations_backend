@@ -32,20 +32,13 @@ O **Flutter Solidarity App** é um aplicativo móvel desenvolvido para intermedi
 
 1. **Clone o repositório:**
     ```sh
-    git clone https://github.com/seu-usuario/flutter-solidarity-app.git
+    git clone https://github.com/BecxAgy/donations_backend.git
     ```
 2. **Navegue até o diretório do projeto:**
     ```sh
-    cd flutter-solidarity-app
+    cd donations_backend
     ```
-3. **Instale as dependências:**
-    ```sh
-    flutter pub get
-    ```
-4. **Execute o aplicativo:**
-    ```sh
-    flutter run
-    ```
+
 
 ## 📚 Documentação
 
